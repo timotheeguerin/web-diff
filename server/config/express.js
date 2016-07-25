@@ -6,9 +6,9 @@ import path from 'path';
 import flash from 'express-flash';
 import methodOverride from 'method-override';
 import unsupportedMessage from '../db/unsupportedMessage';
-import { sessionSecret } from './secrets';
-import { DB_TYPE, ENV } from './appConfig';
-import { session as dbSession } from '../db';
+import {sessionSecret} from './secrets';
+import {DB_TYPE, ENV} from './appConfig';
+import {session as dbSession} from '../db';
 import gzip from 'compression';
 
 
@@ -21,7 +21,7 @@ export default (app) => {
   app.disable('x-powered-by');
 
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+  app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
   app.use(methodOverride());
 
   if (ENV === 'production') {

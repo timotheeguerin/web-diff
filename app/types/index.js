@@ -23,3 +23,14 @@ export const SIGNUP_ERROR_USER = 'SIGNUP_ERROR_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOGOUT_SUCCESS_USER = 'LOGOUT_SUCCESS_USER';
 export const LOGOUT_ERROR_USER = 'LOGOUT_ERROR_USER';
+
+// Account
+export const Create_Account_Request = 'CREATE_ACCOUNT_REQUEST';
+export const Create_Account_Success = 'CREATE_ACCOUNT_SUCCESS';
+export const Create_Account_Failure = 'CREATE_ACCOUNT_FAILURE';
+export const Create_Account_Duplicate = 'CREATE_ACCOUNT_DUPLICATE';
+export const Get_Accounts = 'GET_ACCOUNTS';
+export const Get_Accounts_Request = 'GET_ACCOUNTS_REQUEST';
+export const Get_Accounts_Success = 'GET_ACCOUNTS_SUCCESS';
+export const Get_Accounts_Failure = 'GET_ACCOUNTS_FAILURE';
+export const Destroy_Account = 'DESTROY_ACCOUNT';
