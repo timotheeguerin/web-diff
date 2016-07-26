@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Account from '../models/accounts';
+import Account from '../models/account';
 
 /**
  * List

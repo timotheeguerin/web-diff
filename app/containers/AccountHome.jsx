@@ -9,15 +9,13 @@ import styles from 'css/components/accounts/container';
 const cx = classNames.bind(styles);
 
 class AccountHome extends Component {
-
-  //Data that needs to be called before rendering the component
-  //This is used for server side rending via the fetchComponentDataBeforeRender() method
+  // Automatically fetch the accounts for server side rendering
   static need = [  // eslint-disable-line
     fetchAccounts
   ];
 
   render() {
-    const {accounts, newAccount, destroyAccount} = this.props;
+    const {accounts, newAccount, destroyAccount, createAccount} = this.props;
     return (
       <div className={cx('account-home')}>
         <CreateAccountForm account={newAccount} onEntrySave={createAccount} />

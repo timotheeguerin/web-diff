@@ -7,6 +7,7 @@ import { controllers, passport as passportConfig } from '../db';
 
 const usersController = controllers && controllers.users;
 const topicsController = controllers && controllers.topics;
+const accountsController = controllers.accounts;
 
 export default (app) => {
   // user routes
@@ -52,4 +53,10 @@ export default (app) => {
   } else {
     console.warn(unsupportedMessage('topics routes'));
   }
+
+  // Accounts
+  app.get('/api/accounts', accountsController.all);
+  app.post('/api/accounts/:id', accountsController.add);
+  app.put('/api/accounts/:id', accountsController.update);
+  app.delete('/api/accounts/:id', accountsController.remove);
 };

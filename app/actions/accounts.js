@@ -15,12 +15,12 @@ import * as types from 'types';
  * @param api
  * @return Promise
  */
-export function makeAccountRequest(method, id  = '', data = null, api = '/account') {
-  return request[method](api + id, data);
+export function makeAccountRequest(method, id = null, data = null, api = '/api/accounts') {
+  return request[method](api + (id ? ('/' + id) : ''), data);
 }
 
 export function destroy(id) {
-  return { type: types.Destroy_Accounts, id };
+  return {type: types.DESTROY_ACCOUNT, id};
 }
 
 /*
@@ -29,7 +29,7 @@ export function destroy(id) {
  */
 export function createAccountRequest(data) {
   return {
-    type: types.Create_Account_Request,
+    type: types.CREATE_ACCOUNT_REQUEST,
     id: data.id,
     name: data.name
   };
@@ -37,13 +37,13 @@ export function createAccountRequest(data) {
 
 export function createAccountSuccess() {
   return {
-    type: types.Create_Account_Success
+    type: types.CREATE_ACCOUNT_SUCCESS
   };
 }
 
 export function createAccountFailure(data) {
   return {
-    type: types.Create_Account_Failure,
+    type: types.CREATE_ACCOUNT_FAILURE,
     id: data.id,
     error: data.error
   };
@@ -51,24 +51,25 @@ export function createAccountFailure(data) {
 
 export function createAccountDuplicate() {
   return {
-    type: types.Create_Account_Duplicate
+    type: types.CREATE_ACCOUNT_DUPLICATE
   };
 }
-
 
 // This action creator returns a function,
 // which will get executed by Redux-Thunk middleware
 // This function does not need to be pure, and thus allowed
 // to have side effects, including executing asynchronous API calls.
-export function createAccount(name) {
+export function createAccount({name}) {
   return (dispatch, getState) => {
     // If the text box is empty
     if (name.trim().length <= 0) return;
 
-    const id = md5.hash(text);
+    const id = md5.hash(name);
     // Redux thunk's middleware receives the store methods `dispatch`
     // and `getState` as parameters
-    const { account } = getState();
+
+    const {account} = getState();
+
     const data = {
       count: 1,
       id,
@@ -87,26 +88,28 @@ export function createAccount(name) {
     // First dispatch an optimistic update
     dispatch(createAccountRequest(data));
 
-    return makeAccountRequest('post', id, data)
-      .then(res => {
-        if (res.status === 200) {
-          // We can actually dispatch a CREATE_ACCOUNT_SUCCESS
-          // on success, but I've opted to leave that out
-          // since we already did an optimistic update
-          // We could return res.json();
-          return dispatch(createAccountSuccess());
-        }
-      })
-      .catch(() => {
-        return dispatch(createAccountFailure({ id, error: 'Oops! Something went wrong and we couldn\'t create your account'}));
-      });
+    return makeAccountRequest('post', id, data).then(res => {
+      if (res.status === 200) {
+        // We can actually dispatch a CREATE_ACCOUNT_SUCCESS
+        // on success, but I've opted to leave that out
+        // since we already did an optimistic update
+        // We could return res.json();
+        return dispatch(createAccountSuccess());
+      }
+    }).catch(() => {
+      return dispatch(createAccountFailure({
+        id,
+        error: 'Oops! Something went wrong and we couldn\'t create your account'
+      }));
+    });
   };
 }
 
 // Fetch posts logic
 export function fetchAccounts() {
+  console.log("Fetching accounts...");
   return {
-    type: types.Get_Accounts,
+    type: types.GET_ACCOUNTS,
     promise: makeAccountRequest('get')
   };
 }
@@ -115,7 +118,9 @@ export function destroyAccount(id) {
   return dispatch => {
     return makeAccountRequest('delete', id)
       .then(() => dispatch(destroy(id)))
-      .catch(() => dispatch(createAccountFailure({id,
-        error: 'Oops! Something went wrong and we couldn\'t delete this account'})));
+      .catch(() => dispatch(createAccountFailure({
+        id,
+        error: 'Oops! Something went wrong and we couldn\'t delete this account'
+      })));
   };
 }

@@ -9,9 +9,8 @@ const AccountList = ({onDestroy, accounts}) => {
   const accountItems = accounts.map((account, key) => {
     return (
       <AccountItem index={key}
-                   id={account.id}
-                   key={key}
-                   text={account.name}
+                   key={account.id}
+                   account={account}
                    onDestroy={onDestroy}/>);
   });
 

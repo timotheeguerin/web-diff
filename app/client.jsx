@@ -7,6 +7,7 @@ import createRoutes from 'routes';
 import configureStore from 'store/configureStore';
 import preRenderMiddleware from 'middlewares/preRenderMiddleware';
 require('font-awesome-webpack');
+require('css/vendor/normalise');
 
 // Grab the state from a global injected into
 // server-generated HTML

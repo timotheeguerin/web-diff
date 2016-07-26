@@ -1,7 +1,7 @@
 @value montserrat from './common/typography.css';
 @value grey-lightest from './common/colors';
 
-/*
+/**
  * Add any global styles here
  */
 * {
@@ -22,4 +22,3 @@ body {
   font-smoothing: antialiased;
   min-height: 100vh;
 }
-

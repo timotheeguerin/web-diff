@@ -55,7 +55,7 @@ module.exports = {
     },
       {test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader"}, {
         test: /\.css$/,
-        include: /node_modules/,
+        include: /(node_modules)/,
         loader: 'style-loader!css-loader'
       }, {
         test: /\.css$/,

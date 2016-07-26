@@ -6,10 +6,10 @@ const isFetching = (
   action
 ) => {
   switch (action.type) {
-    case types.GET_TOPICS_REQUEST:
+    case types.GET_ACCOUNTS_REQUEST:
       return true;
-    case types.GET_TOPICS_SUCCESS:
-    case types.GET_TOPICS_FAILURE:
+    case types.GET_ACCOUNTS_SUCCESS:
+    case types.GET_ACCOUNTS_FAILURE:
       return false;
     default:
       return state;
@@ -21,10 +21,10 @@ const account = (
   action
 ) => {
   switch (action.type) {
-    case types.Create_Account_Request:
+    case types.CREATE_ACCOUNT_REQUEST:
       return {
         id: action.id,
-        name: action.text
+        name: action.name
       };
     default:
       return state;
@@ -36,13 +36,13 @@ const accounts = (
   action
 ) => {
   switch (action.type) {
-    case types.Get_Account_Sucess:
+    case types.GET_ACCOUNTS_SUCCESS:
       return action.res.data;
-    case types.Create_Account_Request:
+    case types.CREATE_ACCOUNT_REQUEST:
       return [...state, account(undefined, action)];
-    case types.Create_Account_Failure:
+    case types.GET_ACCOUNTS_FAILURE:
       return state.filter(t => t.id !== action.id);
-    case types.Destroy_Account:
+    case types.DESTROY_ACCOUNT:
       return state.filter(t => t.id !== action.id);
     default:
       return state;
@@ -56,7 +56,7 @@ const newAccount = (
   switch (action.type) {
     case types.TYPING:
       return action.newAccount;
-    case types.Create_Account_Request:
+    case types.CREATE_ACCOUNT_REQUEST:
       return {name: ''};
     default:
       return state;
