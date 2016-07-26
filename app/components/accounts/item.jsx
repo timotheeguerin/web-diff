@@ -20,11 +20,11 @@ export default class AccountItem extends Component {
     const {id, name} = this.props.account;
 
     return (
-      <li className={cx('item')} key={id}>
+      <a className={cx('item')} key={id}>
         <span className={cx('topic')}>{name}</span>
         <button className={ cx('button', 'destroy') }
                 onClick={this.onDestroyClick}>{String.fromCharCode(215)}</button>
-      </li>
+      </a>
     );
   }
 }

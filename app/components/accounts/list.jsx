@@ -17,7 +17,7 @@ const AccountList = ({onDestroy, accounts}) => {
   return (
     <div className={cx('accounts-container')}>
       <h3 className={cx('title')}>List of your accounts</h3>
-      <ul className={cx('list')}>{accountItems}</ul>
+      <div className={cx('list')}>{accountItems}</div>
     </div>
   );
 };

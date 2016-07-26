@@ -31,16 +31,12 @@
 }
 
 .item {
+  display: block;
   padding: 1rem;
   width: 100%;
+  border-bottom: box-shadow-border;
+}
 
-  &:not(:last-child) {
-    border-bottom: box-shadow-border;
-  }
-
-  &a {
-    &:hover {
-      background-color: #e5e5e5;
-    }
-  }
+a.item:hover {
+  background-color: #e5e5e5;
 }
