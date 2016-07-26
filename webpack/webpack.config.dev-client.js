@@ -106,7 +106,11 @@ module.exports = {
       }, {
         test: /\.css$/,
         loader: 'style!css?module&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader',
-      }
+      },
+      {
+        test: /\.(less)$/i,
+        loader: "style!css!less"
+      },
     ])
   },
   resolve: {

@@ -6,6 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import createRoutes from 'routes';
 import configureStore from 'store/configureStore';
 import preRenderMiddleware from 'middlewares/preRenderMiddleware';
+require('font-awesome-webpack');
 
 // Grab the state from a global injected into
 // server-generated HTML

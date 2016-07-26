@@ -60,7 +60,11 @@ module.exports = {
       }, {
         test: /\.css$/,
         loader: 'css/locals?module&localIdentName=[name]__[local]___[hash:base64:5]',
-      }
+      },
+      {
+        test: /\.(less)$/i,
+        loader: "style!css!less"
+      },
     ])
   },
   resolve: {

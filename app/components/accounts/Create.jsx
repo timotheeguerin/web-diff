@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import classNames from 'classnames/bind';
 import styles from 'css/components/accounts/create';
+import FontAwesome from 'react-fontawesome';
 
 const cx = classNames.bind(styles);
 
@@ -27,7 +28,7 @@ export default class CreateAccountForm extends Component {
         <button className={cx('save-btn')} onClick={this.props.onEntrySave}>
           Create
         </button>
-        <i className="fa fa-plus-circle"/>
+        <FontAwesome name='plus-circle' />
       </div>
     )
   }
