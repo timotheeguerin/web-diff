@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import classNames from 'classnames/bind';
 import styles from 'css/components/accounts/list';
-
+import {Link} from 'react-router'
 const cx = classNames.bind(styles);
 
 export default class AccountItem extends Component {
@@ -17,14 +17,14 @@ export default class AccountItem extends Component {
   }
 
   render() {
-    const {id, name} = this.props.account;
+    const {_id, name} = this.props.account;
 
     return (
-      <a className={cx('item')} key={id}>
+      <Link className={cx('item')} key={_id} to={`/accounts/${_id}`}>
         <span className={cx('topic')}>{name}</span>
         <button className={ cx('button', 'destroy') }
                 onClick={this.onDestroyClick}>{String.fromCharCode(215)}</button>
-      </a>
+      </Link>
     );
   }
 }

@@ -7,6 +7,7 @@ import About from 'containers/About';
 import LoginOrRegister from 'containers/LoginOrRegister';
 import Dashboard from 'containers/Dashboard';
 import BrowseAccount from "containers/BrowseAccount";
+import ShowAccount from "containers/ShowAccount";
 import Compare from "containers/Compare";
 
 
@@ -43,6 +44,7 @@ export default (store) => {
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
       <Route path="about" component={About} />
       <Route path="accounts" component={BrowseAccount} />
+      <Route path="accounts/:id" component={ShowAccount} />
       <Route path="compare" component={Compare} />
     </Route>
   );

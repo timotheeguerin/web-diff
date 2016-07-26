@@ -1,6 +1,10 @@
+@value grey-darkest from "./common/colors";
+
 :global {
   a {
     cursor: pointer;
+    text-decoration: none;
+    color: grey-darkest;
   }
 
   iframe {

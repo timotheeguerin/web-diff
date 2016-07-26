@@ -1,43 +1,57 @@
+import axios from 'axios';
 import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
 import classNames from 'classnames/bind';
-import AccountList from 'components/accounts/list';
-import CreateAccountForm from 'components/accounts/create';
 import {createAccount, destroyAccount, fetchAccounts} from 'actions/accounts';
-import styles from 'css/components/accounts/container';
+import styles from 'css/components/accounts/show';
+import AccountCard from "components/accounts/Card";
+import RepositoryList from "components/repositories/List";
+import CreateRepositoryForm from "components/repositories/Create";
 
 const cx = classNames.bind(styles);
 
-class AccountHome extends Component {
-  // Automatically fetch the accounts for server side rendering
-  static need = [  // eslint-disable-line
-    fetchAccounts
-  ];
+class ShowAccount extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      account: null,
+      repositories: []
+    };
+
+    this.addNewRepo = this.addNewRepo.bind(this);
+  }
+
+  componentDidMount() {
+    const {id} = this.props.params;
+    console.log("LOading ");
+    axios.get(`/api/accounts/${id}`).then((res) => {
+      this.setState({account: res.data});
+    });
+
+    axios.get(`/api/accounts/${id}/repositories`).then((res) => {
+      this.setState({repositories: res.data});
+    });
+  }
+
+  addNewRepo(data) {
+    const {id} = this.props.params;
+
+    axios.post(`/api/accounts/${id}/repositories`, data).then((res) => {
+      console.log("Lol this is working well 2", res);
+    }).catch((err) => {
+      console.log("Error is ", err);
+    })
+  }
 
   render() {
-    const {accounts, newAccount, destroyAccount, createAccount} = this.props;
+    console.log("TSTTE", this.state);
     return (
-      <div className={cx('account-home')}>
-        <CreateAccountForm account={newAccount} onEntrySave={createAccount} />
-        <AccountList accounts={accounts} onDestroy={destroyAccount} />
+      <div className={cx('account')}>
+        <AccountCard account={this.state.account}/>
+        <CreateRepositoryForm onEntrySave={this.addNewRepo}/>
+        <RepositoryList repositories={this.state.repositories}/>
       </div>
     );
   }
 }
 
-AccountHome.propTypes = {
-  accounts: PropTypes.array.isRequired,
-  createAccount: PropTypes.func.isRequired,
-  destroyAccount: PropTypes.func.isRequired
-};
-
-function mapStateToProps(state) {
-  return {
-    accounts: state.account.accounts,
-    newAccount: state.account.newAccount
-  };
-}
-
-// Read more about where to place `connect` here:
-// https://github.com/rackt/react-redux/issues/75#issuecomment-135436563
-export default connect(mapStateToProps, {createAccount, destroyAccount, fetchAccounts})(AccountHome);
+export default ShowAccount;
