@@ -16,6 +16,22 @@ export function all(req, res) {
 }
 
 /**
+ * Get
+ */
+export function get(req, res) {
+  console.log(req.params.id);
+  Account.findById(req.params.id).exec((err,data) => {
+    console.log(err);
+    console.log(data);
+    if (err) {
+      console.log('Error on save!' + err);
+      return res.status(500).send('We failed to save for some reason'+ err);
+    }
+    return res.json(data);
+  });
+}
+
+/**
  * Add a Account
  */
 export function add(req, res) {
@@ -78,6 +94,7 @@ export function remove(req, res) {
 export default {
   all,
   add,
+  get,
   update,
   remove
 };

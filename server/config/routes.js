@@ -8,6 +8,7 @@ import { controllers, passport as passportConfig } from '../db';
 const usersController = controllers && controllers.users;
 const topicsController = controllers && controllers.topics;
 const accountsController = controllers.accounts;
+const repositoryController = controllers.repositories;
 
 export default (app) => {
   // user routes
@@ -55,8 +56,15 @@ export default (app) => {
   }
 
   // Accounts
+    app.get('/api/accounts/:id', accountsController.get);
   app.get('/api/accounts', accountsController.all);
   app.post('/api/accounts/:id', accountsController.add);
   app.put('/api/accounts/:id', accountsController.update);
   app.delete('/api/accounts/:id', accountsController.remove);
+    //Repositories
+    app.get('/api/accounts/:id/repositories', repositoryController.allRepos);
+    app.post('/api/accounts/:id/repositories', repositoryController.addRepo);
+    app.delete('/api/accounts/:id/repositories/:repoId', repositoryController.removeRepo);
+    app.get('/api/accounts/:acctId/repositories/:id/sync', repositoryController.syncRepo);
+
 };
