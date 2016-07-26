@@ -111,7 +111,7 @@ export function fetchAccounts() {
   };
 }
 
-export function destroyAccounts(id) {
+export function destroyAccount(id) {
   return dispatch => {
     return makeAccountRequest('delete', id)
       .then(() => dispatch(destroy(id)))

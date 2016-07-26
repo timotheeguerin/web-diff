@@ -1,10 +1,44 @@
+@value grey-medium-light from "./colors";
+@value grey-darkest from "./colors";
+
+@value box-shadow-border: 1px solid grey-medium-light;
+
 .card {
   border-radius: 4px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: white;
+  color: grey-darkest;
+  box-shadow: 1px 1px 5px 0 grey-medium-light;
+}
+
+.card-box {
+  composes: card;
+  margin: 1rem;
 }
 
 .title {
   margin: 0;
-  padding: 24px;
-  border-radius: 4px 4px 0 0;
+  padding: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  border-bottom: box-shadow-border;
+}
+
+.list {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  > .item {
+    padding: 1rem;
+    width: 100%;
+    &:not(:last-child) {
+      border-bottom: box-shadow-border;
+    }
+  }
+
+  a.item {
+    &:hover {
+      background-color: #e5e5e5;
+    }
+  }
 }

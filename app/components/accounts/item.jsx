@@ -31,20 +31,20 @@ export default class AccountItem extends Component {
   render() {
     return (
       <li className={cx('topic-item')} key={this.props.id}>
-        <span className={cx('topic')}>{this.props.text}</span>
-        <button className={
+  <span className={cx('topic')}>{this.props.text}</span>
+    <button className={
       cx('button', 'increment')
   } onClick={this.onIncrement}>+
-        </button>
-        <button className={
+    </button>
+    <button className={
       cx('button', 'decrement')
   } onClick={this.onDecrement}>-
-        </button>
-        <button className={
+    </button>
+    <button className={
       cx('button', 'destroy')
   } onClick={this.onDestroyClick}>{String.fromCharCode(215)}</button>
-      </li>
-    );
+    </li>
+  );
   }
 }
 

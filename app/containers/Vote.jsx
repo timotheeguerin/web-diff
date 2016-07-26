@@ -16,7 +16,7 @@ class Vote extends Component {
   //This is used for server side rending via the fetchComponentDataBeforeRender() method
   static need = [  // eslint-disable-line
     fetchTopics
-  ]
+  ];
 
   render() {
     const {newTopic, topics, typing, createTopic, destroyTopic, incrementCount, decrementCount } = this.props;

@@ -50,14 +50,14 @@ const accounts = (
 };
 
 const newAccount = (
-  state = '',
+  state = {name: ''},
   action
 ) => {
   switch (action.type) {
     case types.TYPING:
       return action.newAccount;
     case types.Create_Account_Request:
-      return '';
+      return {name: ''};
     default:
       return state;
   }

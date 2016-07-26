@@ -1,4 +1,5 @@
 @value montserrat from './common/typography.css';
+@value grey-lightest from './common/colors';
 
 /*
  * Add any global styles here
@@ -13,10 +14,12 @@ body {
 
 .app {
   composes: box from './common/layout.css';
-
+  background-color: grey-lightest;
   height: 100%;
 
   font-family: montserrat;
   font-weight: normal;
   font-smoothing: antialiased;
+  min-height: 100vh;
 }
+

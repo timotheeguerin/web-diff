@@ -1,0 +1,11 @@
+.form {
+  composes: card-box from "../../common/card"
+}
+
+.title {
+  composes: title from "../../common/card"
+}
+
+.save-btn {
+  composes: button from "../../common/button"
+}
