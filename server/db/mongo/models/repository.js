@@ -3,11 +3,11 @@
  *
  */
 import mongoose from 'mongoose';
-
-const RepositorySchema = new mongoose.Schema({
-  id: String,
+import {RevisionsSchema} from './revisions';
+export const RepositorySchema = new mongoose.Schema({
   url: String,
-  name: String
+  name: String,
+  revisions: [RevisionsSchema]
 });
 
 // Compiles the schema into a model, opening (or creating, if

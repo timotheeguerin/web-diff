@@ -3,12 +3,11 @@
  *
  */
 import mongoose from 'mongoose';
-import Repository from './repository';
+import {RepositorySchema} from './repository';
 
 const AccountSchema = new mongoose.Schema({
-  id: String,
   name: String,
-  repositories: [Repository]
+  repositories: [RepositorySchema]
 });
 
 // Compiles the schema into a model, opening (or creating, if
