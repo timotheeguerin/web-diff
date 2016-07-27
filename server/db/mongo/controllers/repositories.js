@@ -172,11 +172,10 @@ export function getAllComp(req, res) {
 
 function tryCloneRepo(url,folder,hash){
     if (fs.existsSync(folder)) {
-        require('simple-git')(folder)
-            .pull()
+        return require('simple-git')(folder)
             .checkout(hash)
     }else{
-        require('simple-git')()
+        return require('simple-git')()
             .clone(url,folder)
             .checkout(hash)
     }
@@ -206,24 +205,28 @@ export function startComp(req, res) {
         var folder1 = comparisonFolder+'/'+hash1;
         tryCloneRepo(repo.url,folder1,hash1).then(()=>{
             exec("npm install",{cwd: folder1},function(err, stdout, stderr){
+                console.log()
                 console.log(err + stdout + stderr)
-            }).then(()=>{
-                exec("npm run dev 3001",{cwd: folder1},function(err, stdout, stderr){
-                    console.log(err + stdout + stderr)
-                });
             });
+
+            exec("npm run dev 3001",{cwd: folder1},function(err, stdout, stderr){
+                    console.log(err + stdout + stderr)
+            });
+
+            return res.status(200).send("Start successfully!");
         });
         var folder2 =comparisonFolder+'/'+hash2;
         tryCloneRepo(repo.url,folder2,hash2).then(()=>{
             exec("npm install",{cwd: folder2},function(err, stdout, stderr){
                 console.log(err + stdout + stderr)
-            }).then(()=>{
-                exec("npm run dev 3002",{cwd: folder1},function(err, stdout, stderr){
-                    console.log(err + stdout + stderr)
-                });
             });
+
+            exec("npm run dev 3002",{cwd: folder1},function(err, stdout, stderr){
+                    console.log(err + stdout + stderr)
+            });
+
+            return res.status(200).send("Start successfully!");
         });
-        return res.status(200).send("Start successfully!");
     });
 }
 
