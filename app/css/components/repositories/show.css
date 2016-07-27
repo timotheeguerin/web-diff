@@ -16,25 +16,3 @@
 .item {
   composes: item from "../../common/card";
 }
-
-.compare-session-list {
-  margin: 1rem;
-  position: relative;
-}
-
-.add-compare-session-btn {
-  composes: card-box from "../../common/card";
-  display: block;
-  box-sizing: border-box;
-  font-size: 5rem;
-  width: 30%;
-  height: 10rem;
-  line-height: 10rem;
-  text-align: center;
-  vertical-align: middle;
-  color: grey-medium-dark;
-}
-
-.add-compare-session-btn:hover {
-  background-color: grey-lighter;
-}

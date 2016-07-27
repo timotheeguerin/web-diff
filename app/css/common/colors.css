@@ -19,3 +19,12 @@
 @value grey-dark: #a0a8a8;
 @value grey-darker: #555555;
 @value grey-darkest: #333333;
+
+/* Red */
+@value red_light: #FF6D69;
+@value red-medium: #fa4b45;
+@value red_dark: #B50D09;
+
+@value green_light: #69C491;
+@value green-medium: #43AB70;
+@value green_dark: #289859;
