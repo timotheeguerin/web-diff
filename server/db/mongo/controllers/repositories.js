@@ -76,7 +76,7 @@ export function syncRepo(req, res) {
 
     var repoId = req.params.id;
     var accountId = req.params.acctId;
-    var repositoryFolder = dir+'/'+accountId+"-"+repoId;
+    var repositoryFolder = dir+'/'+accountId+"/"+repoId+"/"+"base";
     console.log("Blah!!!");
     Account.findById(accountId).exec((err,account) => {
         var repository = account.repositories.id(repoId);
@@ -170,32 +170,65 @@ export function getAllComp(req, res) {
     });
 }
 
+function tryCloneRepo(url,folder,hash){
+    if (fs.existsSync(folder)) {
+        require('simple-git')(folder)
+            .pull()
+            .checkout(hash)
+    }else{
+        require('simple-git')()
+            .clone(url,folder)
+            .checkout(hash)
+    }
+}
+
 /**
- * Start comparison from repository
+ * Start comparison from repository (should work)
  */
 export function startComp(req, res) {
+
+    var sys = require('sys'), exec = require('child_process').exec;
+
     var acctId = req.params.acctId;
     var repoId = req.params.repoId;
     var compId = req.params.id;
 
     console.log('CompId'+compId);
 
-    Account.update(
-        {_id:acctId,
-            "repositories._id":repoId,
-            "repositories.comparisons._id":compId
-        },
-        {"$set":{"repositories.comparisons.$$.target.state":"started"}}).exec((err,data)  => {
-        if (err) {
-            console.log('Error on save!'+err);
-            return res.status(500).send('We failed to save for some reason:'+ err);
-        }
-        return res.status(200).send('Updated successfully');
+    Account.findById(acctId).exec((err,account) => {
+        var repo = account.repositories.id(repoId)
+        var comparison = account.repositories.id(repoId).comparisons.id(compId);
+        var hash1 = comparison.target.hash;
+        var hash2 = comparison.base.hash;
+
+        var comparisonFolder = dir + '/' + acctId + "/" + repoId + "/comparisons";
+
+        var folder1 = comparisonFolder+'/'+hash1;
+        tryCloneRepo(repo.url,folder1,hash1).then(()=>{
+            exec("npm install",{cwd: folder1},function(err, stdout, stderr){
+                console.log(err + stdout + stderr)
+            }).then(()=>{
+                exec("npm run dev 3001",{cwd: folder1},function(err, stdout, stderr){
+                    console.log(err + stdout + stderr)
+                });
+            });
+        });
+        var folder2 =comparisonFolder+'/'+hash2;
+        tryCloneRepo(repo.url,folder2,hash2).then(()=>{
+            exec("npm install",{cwd: folder2},function(err, stdout, stderr){
+                console.log(err + stdout + stderr)
+            }).then(()=>{
+                exec("npm run dev 3002",{cwd: folder1},function(err, stdout, stderr){
+                    console.log(err + stdout + stderr)
+                });
+            });
+        });
+        return res.status(200).send("Start successfully!");
     });
 }
 
 /**
- * Stop comparison from repository
+ * Stop comparison from repository (in progress)
  */
 export function stopComp(req, res) {
     var acctId = req.params.acctId;
