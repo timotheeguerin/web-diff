@@ -109,14 +109,14 @@ export default class DualView extends Component {
            onMouseLeave={this.sliderStopDragging} ref='container'>
         <div className='left-iframe revision-box' ref='left_iframe'
              style={{ 'width': this.state.slider_position}}>
-          <PreviewBox repository={this.props.repository} page={this.props.page} url="http://localhost:3000/"
+          <PreviewBox repository={this.props.repository} page={this.props.page} url="http://localhost:8000"
                       revision={this.props.left_revision} onMouseMove={this.onMouseMoveInIframe}
                       onScroll={this.iframeScrolling} scrollTop={this.state.scrollTop}
                       width={this.state.containerWidth}/>
         </div>
         {slider}
         <div className='right-iframe revision-box' ref='right_iframe'>
-          <PreviewBox repository={this.props.repository} page={this.props.page} url="http://localhost:3000/about"
+          <PreviewBox repository={this.props.repository} page={this.props.page} url="http://localhost:8001"
                       revision={this.props.right_revision} onMouseMove={this.onMouseMoveInIframe}
                       onScroll={this.iframeScrolling} scrollTop={this.state.scrollTop}
                       width={this.state.containerWidth}/>
