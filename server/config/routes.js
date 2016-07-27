@@ -67,5 +67,9 @@ export default (app) => {
   app.post('/api/accounts/:id/repositories', repositoryController.addRepo);
   app.delete('/api/accounts/:id/repositories/:repoId', repositoryController.removeRepo);
   app.get('/api/accounts/:acctId/repositories/:id/sync', repositoryController.syncRepo);
+    //Comparisons
+    app.get('/api/accounts/:acctId/repositories/:repoId/comparisons', repositoryController.getAllComp);
+    app.get('/api/accounts/:acctId/repositories/:repoId/comparisons/:id', repositoryController.getComp);
+    app.post('/api/accounts/:acctId/repositories/:repoId/comparisons', repositoryController.addComp);
 
 };

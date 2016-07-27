@@ -97,10 +97,57 @@ export function syncRepo(req, res) {
     });
 }
 
+/**
+ * Add comparison to repository
+ */
+export function addComp(req, res) {
+    var acctId = req.params.acctId;
+    var repoId = req.params.repoId;
+
+        Account.update(
+            {_id:acctId,"repositories._id":repoId},
+            {"$push":{"repositories.$.comparisons":req.body}}).exec((err,data)  => {
+            if (err) {
+                console.log('Error on save!'+err);
+                return res.status(500).send('We failed to save for some reason:'+ err);
+            }
+            return res.status(200).send('Updated successfully');
+        });
+}
+
+/**
+ * Get comparison from repository
+ */
+export function getComp(req, res) {
+    var acctId = req.params.acctId;
+    var repoId = req.params.repoId;
+    var id = req.params.id;
+
+    Account.findById(acctId).exec((err,account) => {
+        return res.json(account.repositories.id(repoId).comparisons.id(id));
+    });
+}
+
+/**
+ * Get all comparisons from repository
+ */
+export function getAllComp(req, res) {
+    var acctId = req.params.acctId;
+    var repoId = req.params.repoId;
+    var id = req.params.id;
+
+    Account.findById(acctId).exec((err,account) => {
+        return res.json(account.repositories.id(repoId).comparisons);
+    });
+}
+
 export default {
     allRepos,
     addRepo,
     getRepo,
     removeRepo,
-    syncRepo
+    syncRepo,
+    addComp,
+    getComp,
+    getAllComp
 };
