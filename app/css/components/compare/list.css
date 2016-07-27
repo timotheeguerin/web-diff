@@ -1,0 +1,67 @@
+@value grey-lighter from "../../common/colors";
+@value grey-medium-dark from "../../common/colors";
+@value grey-darker from "../../common/colors";
+@value red-medium from "../../common/colors";
+@value green-medium from "../../common/colors";
+
+.title {
+  composes: title from "../../common/card";
+  display: block;
+}
+
+.title:hover {
+  background-color: grey-lighter;
+}
+
+.item {
+  composes: item from "../../common/card";
+}
+
+.session-list {
+  margin: 1rem;
+  position: relative;
+}
+
+.session-item {
+  composes: card-box from "../../common/card";
+  display: inline-block;
+  width: 30%;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.add-compare-session-btn {
+  composes: session-item;
+  color: grey-medium-dark;
+  font-size: 5rem;
+  line-height: 10rem;
+  text-align: center;
+}
+
+.add-compare-session-btn:hover {
+  background-color: grey-lighter;
+}
+
+.action-btns {
+  font-size: 2rem;
+}
+
+.action-btn {
+  margin: 0 1rem;
+  cursor: pointer;
+}
+
+.start-btn {
+  composes: action-btn;
+  color: green-medium;
+}
+
+.stop-btn {
+  composes: action-btn;
+  color: grey-darker;
+}
+
+.delete-btn {
+  composes: action-btn;
+  color: red-medium;
+}

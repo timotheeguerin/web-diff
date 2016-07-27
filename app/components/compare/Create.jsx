@@ -12,6 +12,14 @@ let CreateCompareSessionForm = ({handleSubmit, submitting, revisions}) => {
     <form className={cx('form')} onSubmit={handleSubmit}>
       <h1 className={cx('title')}>Create a new comparaison session</h1>
 
+      <Field
+        className={cx('input')}
+        component="input"
+        type="text"
+        placeholder="Session name ..."
+        name="name"
+      />
+
       <div className={cx('fields')}>
         <div className={cx('picker')}>
           <label className={cx('label')}>
