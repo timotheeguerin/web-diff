@@ -26,12 +26,16 @@ class SessionList extends Component {
   }
 
   render() {
-    const {sessions, repository, onNewSession} = this.props;
+    const {sessions, repository, onStart, onStop, onDelete} = this.props;
     const sessionItems = sessions.map((session, key) => {
       return (
         <SessionItem index={key}
                      key={session._id}
-                     session={session}/>);
+                     session={session}
+                     onStart={onStart}
+                     onStop={onStop}
+                     onDelete={onDelete}/>
+      );
     });
     const form = <CreateCompareSessionForm revisions={repository.revisions} onSubmit={this.handleFormSubmit}/>;
     return (
@@ -47,6 +51,9 @@ class SessionList extends Component {
 
 SessionList.propTypes = {
   onNewSession: PropTypes.func.isRequired,
+  onStart: PropTypes.func.isRequired,
+  onStop: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   sessions: PropTypes.array.isRequired
 };
 

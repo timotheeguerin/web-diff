@@ -13,6 +13,24 @@ export default class SessionItem extends Component {
 
   constructor(props) {
     super(props);
+    this.onStart = this.onStart.bind(this);
+    this.onStop = this.onStop.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+  }
+
+  onStart() {
+    const {onStart, session} = this.props;
+    onStart(session._id);
+  }
+
+  onStop() {
+    const {onStop, session} = this.props;
+    onStop(session._id);
+  }
+
+  onDelete() {
+    const {onDelete, session} = this.props;
+    onDelete(session._id);
   }
 
   render() {
@@ -46,9 +64,9 @@ export default class SessionItem extends Component {
     const {state}= this.props.session;
     return (
       <div className={cx('action-btns')}>
-        <i className={cx('fa','fa-play-circle', 'start-btn')}/>
-        <i className={cx('fa','fa-stop-circle', 'stop-btn')}/>
-        <i className={cx('fa','fa-remove', 'delete-btn')}/>
+        <i className={cx('fa','fa-play-circle', 'start-btn')} onClick={this.onStart}/>
+        <i className={cx('fa','fa-stop-circle', 'stop-btn')} onClick={this.onStop}/>
+        <i className={cx('fa','fa-remove', 'delete-btn')} onClick={this.onDelete}/>
       </div>
     )
   }

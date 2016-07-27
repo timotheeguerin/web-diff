@@ -1,3 +1,4 @@
+@value red-medium from "../../common/colors";
 
 .accounts-container {
   composes: card-box from "../../common/card";
@@ -13,4 +14,20 @@
 
 .item {
   composes: item from "../../common/card";
+}
+
+.action-btn {
+  composes: button from "../../common/button";
+  margin: 0 1rem;
+  cursor: pointer;
+  display: inline-block;
+  float: right;
+  padding: 0 0.5rem;
+  width: auto;
+}
+
+.delete-btn {
+  composes: action-btn;
+  background-color: red-medium;
+  color: white;
 }
