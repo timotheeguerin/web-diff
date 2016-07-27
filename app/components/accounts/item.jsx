@@ -13,18 +13,20 @@ export default class AccountItem extends Component {
 
   onDestroyClick() {
     const {account, onDestroy} = this.props;
-    onDestroy(account.id);
+    onDestroy(account._id);
   }
 
   render() {
     const {_id, name} = this.props.account;
 
     return (
-      <Link className={cx('item')} key={_id} to={`/accounts/${_id}`}>
-        <span className={cx('topic')}>{name}</span>
-        <button className={ cx('button', 'destroy') }
-                onClick={this.onDestroyClick}>{String.fromCharCode(215)}</button>
-      </Link>
+      <div className={cx('item')} key={_id}>
+        <Link className={cx('topic')} to={`/accounts/${_id}`}>{name}</Link>
+        <button className={ cx('delete-btn') }
+                onClick={this.onDestroyClick}>
+          <i className='fa fa-remove'/>
+        </button>
+      </div>
     );
   }
 }

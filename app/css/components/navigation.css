@@ -2,7 +2,10 @@
 @value color-black, color-dodger-blue from '../common/colors.css';
 
 .navigation {
-  padding: 0 28px;
+  background-color: white;
+  color: #a0a8a8;
+  padding: 0 2rem;
+  box-shadow: 1px 1px 5px 0 #e5e5e5;
 }
 
 .item {

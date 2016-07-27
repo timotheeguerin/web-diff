@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import Navigation from 'containers/Navigation';
 import Message from 'containers/Message';
 import classNames from 'classnames/bind';
@@ -21,7 +21,7 @@ const App = ({children}) => {
     <div className={cx('app')}>
       <Navigation />
       <Message />
-        {children}
+      {children}
     </div>
   );
 };
