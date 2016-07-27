@@ -47,7 +47,7 @@ export function addRepo(req, res) {
 export function getRepo(req, res) {
     Account.findById(req.params.acctId).exec((err,account) => {
       if(account) {
-       return res.json(status.repositories.id(req.params.id));
+       return res.json(account.repositories.id(req.params.id));
       } else {
         return res.status(404).send("Account doesn't exists!");
       }

@@ -35,13 +35,16 @@ export function get(req, res) {
  * Add a Account
  */
 export function add(req, res) {
-  Account.create(req.body, (err) => {
+
+  const account = new Account();
+  account.name = req.body.name;
+
+  Account.create(account, (err) => {
     if (err) {
       console.log(err);
       return res.status(400).send(err);
     }
-
-    return res.status(200).send('OK');
+    return res.status(201).json(account);
   });
 }
 
@@ -80,7 +83,7 @@ export function update(req, res) {
  * Remove a Account
  */
 export function remove(req, res) {
-  const query = { id: req.params.id };
+  const query = { _id: req.params.id };
   Account.findOneAndRemove(query, (err) => {
     if (err) {
       console.log('Error on delete');
