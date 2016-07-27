@@ -9,12 +9,16 @@ var dir = './repo';
  * List all repositories
  */
 export function allRepos(req, res) {
-  Account.findById(req.params.id).exec((err, data) => {
+  Account.findById(req.params.id).exec((err, account) => {
     if (err) {
       console.log('Error on save!');
       return res.status(500).send('We failed to save for some reason');
     }
-    return res.json(data.repositories);
+    if(account) {
+      return res.json(account.repositories);
+    } else {
+      return res.status(404).send("Account doesn't exists!");
+    }
   });
 }
 
@@ -42,7 +46,11 @@ export function addRepo(req, res) {
  */
 export function getRepo(req, res) {
     Account.findById(req.params.acctId).exec((err,account) => {
+      if(account) {
        return res.json(account.repositories.id(req.params.id));
+      } else {
+        return res.status(404).send("Account doesn't exists!");
+      }
     });
 }
 

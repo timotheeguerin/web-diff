@@ -21,11 +21,8 @@ const account = (
   action
 ) => {
   switch (action.type) {
-    case types.CREATE_ACCOUNT_REQUEST:
-      return {
-        id: action.id,
-        name: action.name
-      };
+    case types.CREATE_ACCOUNT_SUCCESS:
+      return action.data;
     default:
       return state;
   }
@@ -38,12 +35,12 @@ const accounts = (
   switch (action.type) {
     case types.GET_ACCOUNTS_SUCCESS:
       return action.res.data;
-    case types.CREATE_ACCOUNT_REQUEST:
+    case types.CREATE_ACCOUNT_SUCCESS:
       return [...state, account(undefined, action)];
     case types.GET_ACCOUNTS_FAILURE:
-      return state.filter(t => t.id !== action.id);
+      return state.filter(t => t._id !== action.id);
     case types.DESTROY_ACCOUNT:
-      return state.filter(t => t.id !== action.id);
+      return state.filter(t => t._id !== action.id);
     default:
       return state;
   }

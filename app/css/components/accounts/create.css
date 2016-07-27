@@ -1,13 +1,14 @@
 @value grey-lighter from "../../common/colors";
 @value grey-medium-light from "../../common/colors";
 @value grey-medium-dark from "../../common/colors";
+@value green-medium from "../../common/colors";
 
 .form {
   composes: card-box from "../../common/card"
 }
 
 .title {
-  composes: title from "../../common/card"
+  composes: title from "../../common/card";
 }
 
 .fields {
@@ -15,7 +16,7 @@
 }
 
 .save-btn {
-  composes: button from "../../common/button"
+  composes: button from "../../common/button";
 }
 
 .add-btn {

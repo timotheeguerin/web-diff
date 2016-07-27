@@ -27,17 +27,16 @@ export function destroy(id) {
  * @param data
  * @return a simple JS object
  */
-export function createAccountRequest(data) {
+export function createAccountRequest() {
   return {
-    type: types.CREATE_ACCOUNT_REQUEST,
-    id: data.id,
-    name: data.name
+    type: types.CREATE_ACCOUNT_REQUEST
   };
 }
 
-export function createAccountSuccess() {
+export function createAccountSuccess(data) {
   return {
-    type: types.CREATE_ACCOUNT_SUCCESS
+    type: types.CREATE_ACCOUNT_SUCCESS,
+    data: data
   };
 }
 
@@ -86,15 +85,16 @@ export function createAccount({name}) {
     }
 
     // First dispatch an optimistic update
-    dispatch(createAccountRequest(data));
+    dispatch(createAccountRequest());
 
     return makeAccountRequest('post', id, data).then(res => {
-      if (res.status === 200) {
+      if (res.status === 201) {
         // We can actually dispatch a CREATE_ACCOUNT_SUCCESS
         // on success, but I've opted to leave that out
         // since we already did an optimistic update
         // We could return res.json();
-        return dispatch(createAccountSuccess());
+
+        return dispatch(createAccountSuccess(res.data));
       }
     }).catch(() => {
       return dispatch(createAccountFailure({
