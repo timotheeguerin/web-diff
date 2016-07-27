@@ -71,5 +71,7 @@ export default (app) => {
     app.get('/api/accounts/:acctId/repositories/:repoId/comparisons', repositoryController.getAllComp);
     app.get('/api/accounts/:acctId/repositories/:repoId/comparisons/:id', repositoryController.getComp);
     app.post('/api/accounts/:acctId/repositories/:repoId/comparisons', repositoryController.addComp);
+    app.post('/api/accounts/:acctId/repositories/:repoId/comparisons/:id/start', repositoryController.startComp);
+    app.post('/api/accounts/:acctId/repositories/:repoId/comparisons/:id/stop', repositoryController.stopComp);
 
 };

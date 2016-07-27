@@ -162,6 +162,53 @@ export function getAllComp(req, res) {
     });
 }
 
+/**
+ * Start comparison from repository
+ */
+export function startComp(req, res) {
+    var acctId = req.params.acctId;
+    var repoId = req.params.repoId;
+    var compId = req.params.id;
+
+    console.log('CompId'+compId);
+
+    Account.update(
+        {_id:acctId,
+            "repositories._id":repoId,
+            "repositories.comparisons._id":compId
+        },
+        {"$set":{"repositories.comparisons.$$.target.state":"started"}}).exec((err,data)  => {
+        if (err) {
+            console.log('Error on save!'+err);
+            return res.status(500).send('We failed to save for some reason:'+ err);
+        }
+        return res.status(200).send('Updated successfully');
+    });
+}
+
+/**
+ * Stop comparison from repository
+ */
+export function stopComp(req, res) {
+    var acctId = req.params.acctId;
+    var repoId = req.params.repoId;
+    var compId = req.params.id;
+
+    console.log('CompId'+compId);
+
+    Account.update(
+        {_id:acctId,
+            "repositories._id":repoId,
+            "repositories.comparisons._id":compId
+        },
+        {"$set":{"repositories.comparisons.$$.target.state":"stopped"}}).exec((err,data)  => {
+        if (err) {
+            console.log('Error on save!'+err);
+            return res.status(500).send('We failed to save for some reason:'+ err);
+        }
+        return res.status(200).send('Updated successfully');
+    });
+}
 export default {
     allRepos,
     addRepo,
@@ -170,5 +217,7 @@ export default {
     syncRepo,
     addComp,
     getComp,
-    getAllComp
+    getAllComp,
+    startComp,
+    stopComp
 };
