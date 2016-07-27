@@ -103,7 +103,9 @@ export function syncRepo(req, res) {
 export function addComp(req, res) {
     var acctId = req.params.acctId;
     var repoId = req.params.repoId;
-
+    var toUpdate = req.body;
+    toUpdate.target.state="stopped";
+    toUpdate.base.state="stopped";
         Account.update(
             {_id:acctId,"repositories._id":repoId},
             {"$push":{"repositories.$.comparisons":req.body}}).exec((err,data)  => {
