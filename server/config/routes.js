@@ -63,6 +63,7 @@ export default (app) => {
   app.delete('/api/accounts/:id', accountsController.remove);
     //Repositories
     app.get('/api/accounts/:id/repositories', repositoryController.allRepos);
+    app.get('/api/accounts/:acctId/repositories/:id', repositoryController.getRepo);
     app.post('/api/accounts/:id/repositories', repositoryController.addRepo);
     app.delete('/api/accounts/:id/repositories/:repoId', repositoryController.removeRepo);
     app.get('/api/accounts/:acctId/repositories/:id/sync', repositoryController.syncRepo);

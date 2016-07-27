@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Account from '../models/account';
-import Repository from '../models/Repository';
+import Repository from '../models/repository';
 
 var fs = require('fs-extra');
 var dir = './repo';
@@ -43,11 +43,20 @@ export function addRepo(req, res) {
 /**
  * Add repo to account
  */
+export function getRepo(req, res) {
+    Account.findById(req.params.acctId).exec((err,account) => {
+       return res.json(account.repositories.id(req.params.id));
+    });
+}
+
+/**
+ * Remove repo from account
+ */
 export function removeRepo(req, res) {
   console.log(req.params.repoId);
   Account.update({_id: req.params.id}, {"$pull": {repositories: {_id: req.params.repoId}}}, (err, data) => {
     if (err) {
-      console.log('Error on save!');
+      console.log('Error on save!'+err);
       return res.status(500).send('We failed to save for some reason');
     }
 
@@ -60,25 +69,38 @@ export function removeRepo(req, res) {
  */
 export function syncRepo(req, res) {
 
-  var message = "Refreshing repository" + req.params.id + "for account: " + req.params.acctId;
-  var repositoryFolder = dir + '/' + req.params.acctId + "-" + req.params.id;
+    var repoId = req.params.id;
+    var accountId = req.params.acctId;
+    var repositoryFolder = dir+'/'+accountId+"-"+repoId;
+    console.log("Blah!!!");
+    Account.findById(accountId).exec((err,account) => {
+        var repository = account.repositories.id(repoId);
+        var url= repository.url;
+        fs.mkdirs(repositoryFolder, function (err) {
+            if (err) return console.error(err)
+            console.log("success!")
+        });
+        require('simple-git')().clone(url,repositoryFolder).then(()=>
+        {
+            require('simple-git')(repositoryFolder)
+                .log(function(err, log) {
+                    Account.update({_id:accountId,"repositories._id":repoId},{"$set":{"repositories.revisions":log.all}},(err, data) => {
+                        if (err) {
+                            console.log('Error on save!'+err);
+                            return res.status(500).send('We failed to save for some reason');
+                        }
 
-  fs.mkdirs(repositoryFolder, function (err) {
-    if (err) return console.error(err)
-    console.log("success!")
-  }).then(()=> {
-    require('simple-git')(repositoryFolder)
-      .clone("https://github.com/mateialexandru/git-reflections")
-      .log(function (err, log) {
-        message = log;
-        return res.json(message);
-      });
-  });
+                        return res.status(200).send('Updated successfully');
+                    });
+                });
+        })
+    });
 }
 
 export default {
-  allRepos,
-  addRepo,
-  removeRepo,
-  syncRepo
+    allRepos,
+    addRepo,
+    getRepo,
+    removeRepo,
+    syncRepo
 };
