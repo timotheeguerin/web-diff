@@ -9,14 +9,11 @@ var dir = './repo';
  * List all repositories
  */
 export function allRepos(req, res) {
-
-  console.log("Testing repos for " + req.params.id);
   Account.findById(req.params.id).exec((err, data) => {
     if (err) {
       console.log('Error on save!');
       return res.status(500).send('We failed to save for some reason');
     }
-    console.log(data);
     return res.json(data.repositories);
   });
 }
@@ -84,12 +81,15 @@ export function syncRepo(req, res) {
         {
             require('simple-git')(repositoryFolder)
                 .log(function(err, log) {
-                    Account.update({_id:accountId,"repositories._id":repoId},{"$set":{"repositories.revisions":log.all}},(err, data) => {
+                    console.log('update acct '+ accountId + 'update repo' + repoId);
+                    Account.update(
+                        {_id:accountId,"repositories._id":repoId},
+                        {"$set":{"repositories.$.revisions":log.all}}).exec((err,data)  => {
                         if (err) {
                             console.log('Error on save!'+err);
-                            return res.status(500).send('We failed to save for some reason');
+                            return res.status(500).send('We failed to save for some reason:'+ err);
                         }
-
+                        console.log(data);
                         return res.status(200).send('Updated successfully');
                     });
                 });
