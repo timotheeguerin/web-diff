@@ -72,7 +72,6 @@ export default class DualView extends Component {
     if (this.props.type == 'slide') {
       if (this.dragging_slider) {
         const container = ReactDOM.findDOMNode(this.refs.container);
-        console.debug("Container: ", getOffset(container).left, container.offsetWidth);
         const left_offset = getOffset(container).left;
         console.log("Update or not?", positionX, left_offset);
         if (positionX >= left_offset && positionX <= left_offset + container.offsetWidth) {

@@ -36,21 +36,24 @@ class ShowAccount extends Component {
     const {id} = this.props.params;
 
     axios.post(`/api/accounts/${id}/repositories`, data).then((res) => {
-      console.log("Lol this is working well 2", res);
+      this.setState({repositories: [res.data, ...this.state.repositories]})
     }).catch((err) => {
       console.log("Error is ", err);
     })
   }
 
   render() {
-    console.log("TSTTE", this.state);
+    return this.state.account === null ? <div></div> : this.renderContent();
+  }
+
+  renderContent() {
     return (
       <div className={cx('account')}>
         <AccountCard account={this.state.account}/>
         <CreateRepositoryForm onEntrySave={this.addNewRepo}/>
         <RepositoryList repositories={this.state.repositories}/>
       </div>
-    );
+    )
   }
 }
 

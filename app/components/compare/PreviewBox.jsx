@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import ReactDOM from "react-dom";
 
 // Native
-function getOffset (el) {
+function getOffset(el) {
   const box = el.getBoundingClientRect();
 
   return {
@@ -38,7 +38,7 @@ export default class PreviewBox extends Component {
     const {onMouseMove} = this.props;
     iframe.contentDocument.onmousemove = (e) => {
       const mousePosition = e.pageX + getOffset(iframe).left;
-      console.log('Moving in iframe position is ', mousePosition,getOffset(iframe).left);
+      console.log('Moving in iframe position is ', mousePosition, getOffset(iframe).left);
       onMouseMove(mousePosition)
     };
     const props = this.props;
@@ -47,25 +47,11 @@ export default class PreviewBox extends Component {
     // });
   }
 
-  componentDidMount() {
-
-    if (this.refs.iframe) {
-      const iframe = ReactDOM.findDOMNode(this.refs.iframe);
-
-      iframe.onload = () => {
-        console.log("Iframe is loaded");
-        this.iframeLoaded(iframe);
-        this.props.onLoad(iframe);
-      };
-    }
-  }
-
   componentWillReceiveProps(newProps) {
     this.updateIframeScroll(newProps.scrollTop)
   }
 
   componentWillUnmount() {
-    this.dragging_listener.destroy();
   }
 
   updateIframeScroll(scrollTop) {
@@ -87,6 +73,14 @@ export default class PreviewBox extends Component {
     this.setState({dragover: false});
   }
 
+  onIframeLoad() {
+    const iframe = ReactDOM.findDOMNode(this.refs.iframe);
+
+    console.log("Iframe is loaded");
+    this.iframeLoaded(iframe);
+    this.props.onLoad(iframe);
+  }
+
   onRevisionDrop(e) {
     e.preventDefault();
     var revision = JSON.parse(e.dataTransfer.getData("revision"));
@@ -100,7 +94,7 @@ export default class PreviewBox extends Component {
     return (
       <div className='iframe-container'>
         <iframe src={this.props.url} ref='iframe' className={hide_iframe ? 'hidden' : ''}
-                style={{width: this.props.width}}>
+                style={{width: this.props.width}} onLoad={this.onIframeLoad.bind(this)}>
         </iframe>
       </div>
     );

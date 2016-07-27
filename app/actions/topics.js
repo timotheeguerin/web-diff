@@ -79,9 +79,7 @@ export function createTopicDuplicate() {
 // This function does not need to be pure, and thus allowed
 // to have side effects, including executing asynchronous API calls.
 export function createTopic(text) {
-  console.debug("Topic is", text);
   return (dispatch, getState) => {
-    console.debug("Topic is2", text);
 
     // If the text box is empty
     if (text.trim().length <= 0) return;
