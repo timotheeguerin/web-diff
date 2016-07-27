@@ -5,12 +5,13 @@ import styles from 'css/components/accounts/list';
 
 const cx = classNames.bind(styles);
 
-const RepositoryList = ({repositories}) => {
+const RepositoryList = ({repositories, account}) => {
   const repoItems = repositories.map((repository, key) => {
     return (
       <RepositoryItem index={key}
-                   key={repository._id}
-                   repository={repository}/>);
+                      key={repository._id}
+                      repository={repository}
+                      account={account}/>);
   });
 
   return (
@@ -22,6 +23,7 @@ const RepositoryList = ({repositories}) => {
 };
 
 RepositoryList.propTypes = {
+  account: PropTypes.object.isRequired,
   repositories: PropTypes.array.isRequired,
 };
 

@@ -3,7 +3,7 @@
  */
 import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
-import { controllers, passport as passportConfig } from '../db';
+import {controllers, passport as passportConfig} from '../db';
 
 const usersController = controllers && controllers.users;
 const topicsController = controllers && controllers.topics;
@@ -56,16 +56,16 @@ export default (app) => {
   }
 
   // Accounts
-    app.get('/api/accounts/:id', accountsController.get);
+  app.get('/api/accounts/:id', accountsController.get);
   app.get('/api/accounts', accountsController.all);
   app.post('/api/accounts/:id', accountsController.add);
   app.put('/api/accounts/:id', accountsController.update);
   app.delete('/api/accounts/:id', accountsController.remove);
-    //Repositories
-    app.get('/api/accounts/:id/repositories', repositoryController.allRepos);
-    app.get('/api/accounts/:acctId/repositories/:id', repositoryController.getRepo);
-    app.post('/api/accounts/:id/repositories', repositoryController.addRepo);
-    app.delete('/api/accounts/:id/repositories/:repoId', repositoryController.removeRepo);
-    app.get('/api/accounts/:acctId/repositories/:id/sync', repositoryController.syncRepo);
+  //Repositories
+  app.get('/api/accounts/:id/repositories', repositoryController.allRepos);
+  app.get('/api/accounts/:acctId/repositories/:id', repositoryController.getRepo);
+  app.post('/api/accounts/:id/repositories', repositoryController.addRepo);
+  app.delete('/api/accounts/:id/repositories/:repoId', repositoryController.removeRepo);
+  app.get('/api/accounts/:acctId/repositories/:id/sync', repositoryController.syncRepo);
 
 };
