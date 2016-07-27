@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import {SessionsSchema} from './session';
 
 export const ComparisonSchema = new mongoose.Schema({
+  name:String,
   base: SessionsSchema,
   target: SessionsSchema
 });

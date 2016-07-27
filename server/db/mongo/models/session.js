@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 
 export const SessionsSchema = new mongoose.Schema({
   hash: String,
+  name:String,
   message: String,
   port: String,
   url: String,

@@ -73,6 +73,24 @@ export function syncRepo(req, res) {
     Account.findById(accountId).exec((err,account) => {
         var repository = account.repositories.id(repoId);
         var url= repository.url;
+        if(fs.existsSync(repositoryFolder)){
+            require('simple-git')(repositoryFolder)
+                .fetch()
+                .log(function(err, log) {
+                    console.log('update acct '+ accountId + 'update repo' + repoId);
+                    Account.update(
+                        {_id:accountId,"repositories._id":repoId},
+                        {"$set":{"repositories.$.revisions":log.all}}).exec((err,data)  => {
+                        if (err) {
+                            console.log('Error on save!'+err);
+                            return res.status(500).send('We failed to save for some reason:'+ err);
+                        }
+                        console.log(data);
+                        return res.status(200).send('Updated successfully');
+                    });
+                });
+        }
+        else{
         fs.mkdirs(repositoryFolder, function (err) {
             if (err) return console.error(err)
             console.log("success!")
@@ -94,6 +112,7 @@ export function syncRepo(req, res) {
                     });
                 });
         })
+        }
     });
 }
 
