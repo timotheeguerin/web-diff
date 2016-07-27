@@ -1,0 +1,39 @@
+@value grey-lighter from "../../common/colors";
+@value grey-medium-light from "../../common/colors";
+@value grey-medium-dark from "../../common/colors";
+
+.form {
+  composes: card-box from "../../common/card"
+}
+
+.title {
+  composes: title from "../../common/card"
+}
+
+.fields {
+  padding: 1rem;
+}
+
+.save-btn {
+  composes: button from "../../common/button"
+}
+
+.add-btn {
+  color: grey-medium-light;
+  font-size: 7rem;
+  margin: auto;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    color: grey-medium-dark;
+  }
+}
+
+.picker {
+  display: inline-block;
+
+  width: 40%;
+  margin: auto;
+}
