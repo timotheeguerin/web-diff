@@ -16,8 +16,23 @@ export default class SessionItem extends Component {
     this.onStart = this.onStart.bind(this);
     this.onStop = this.onStop.bind(this);
     this.onDelete = this.onDelete.bind(this);
-  }
 
+    // CEATTING remove later
+    this.state = {
+      currentState: "stopped"
+    }
+
+
+  }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({currentState: "starting"});
+
+      setTimeout(() => {
+        this.setState({currentState: "running"});
+      }, 5000);
+    }, 2000);
+  }
   onStart() {
     const {onStart, session} = this.props;
     onStart(session._id);
@@ -45,7 +60,7 @@ export default class SessionItem extends Component {
           </div>
           <div className={cx('item')}>
             <b className={cx('topic')} style={{display: 'inline-block', width: '5rem'}}>{'State: '}</b>
-            <span className={cx('topic')}>{state}</span>
+            <span className={cx('topic')}>{this.state.currentState}</span>
           </div>
           <div className={cx('item')}>
             <b className={cx('topic')} style={{display: 'inline-block', width: '5rem'}}>{'Base: '}</b>
@@ -61,7 +76,6 @@ export default class SessionItem extends Component {
   }
 
   renderButtons() {
-    const {state}= this.props.session;
     return (
       <div className={cx('action-btns')}>
         <i className={cx('fa','fa-play-circle', 'start-btn')} onClick={this.onStart}/>
