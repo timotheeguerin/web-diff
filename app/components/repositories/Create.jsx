@@ -69,7 +69,7 @@ RepositoryForm.propTypes = {
 };
 
 RepositoryForm = reduxForm({
-  form: 'account'  // a unique name for this form
+  form: 'repository'  // a unique name for this form
 })(RepositoryForm);
 
 

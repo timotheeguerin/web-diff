@@ -1,6 +1,7 @@
 @value grey-lighter from "../../common/colors";
 @value grey-medium-light from "../../common/colors";
 @value grey-medium-dark from "../../common/colors";
+@value grey-darker from "../../common/colors";
 
 .form {
   composes: card-box from "../../common/card"
@@ -10,12 +11,9 @@
   composes: title from "../../common/card"
 }
 
-.fields {
-  padding: 1rem;
-}
 
 .save-btn {
-  composes: button from "../../common/button"
+  composes: button from "../../common/button";
 }
 
 .add-btn {
@@ -31,9 +29,24 @@
   }
 }
 
-.picker {
-  display: inline-block;
 
+.fields {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.label {
+  margin-left: 1rem;
+  color:grey-darker;
+  font-size: 1.3rem;
+}
+
+.picker {
   width: 40%;
   margin: auto;
+}
+
+.center-column {
+  width: 20%;
+  margin-top: 5rem;
 }

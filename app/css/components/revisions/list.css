@@ -1,0 +1,25 @@
+
+.accounts-container {
+  composes: card-box from "../../common/card";
+}
+
+.title {
+  composes: title from "../../common/card";
+}
+
+.list {
+  composes: list from "../../common/card";
+}
+
+.item {
+  composes: item from "../../common/card";
+}
+
+.item.selected {
+  background-color: #0088f7;
+}
+
+.item.selected:hover {
+  background-color: #0088f7;
+}
+

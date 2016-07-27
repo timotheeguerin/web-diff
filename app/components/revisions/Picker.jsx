@@ -9,13 +9,13 @@ class RevisionPicker extends Component {
   static propTypes = {
     revisions: PropTypes.array.isRequired,
     onRevisionSelected: PropTypes.func.isRequired,
-    selectedRevisionSha: PropTypes.string
+    selectedRevisionHash: PropTypes.string
   };
 
   render() {
-    const {revisions, selectedRevisionSha, onRevisionSelected} = this.props;
+    const {revisions, selectedRevisionHash, onRevisionSelected} = this.props;
     const revisionItems = revisions.map((revision, key) => {
-      const isSelected = revision.sha === selectedRevisionSha;
+      const isSelected = revision.hash === selectedRevisionHash;
       return (
         <RevisionItem index={key}
                       key={revision._id}
@@ -26,7 +26,6 @@ class RevisionPicker extends Component {
 
     return (
       <div className={cx('accounts-container')}>
-        <h3 className={cx('title')}>Pick a revision</h3>
         <div className={cx('list')}>{revisionItems}</div>
       </div>
     );
