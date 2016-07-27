@@ -8,6 +8,7 @@ import LoginOrRegister from 'containers/LoginOrRegister';
 import Dashboard from 'containers/Dashboard';
 import BrowseAccount from "containers/BrowseAccount";
 import ShowAccount from "containers/ShowAccount";
+import ShowRepository from "containers/ShowRepository";
 import Compare from "containers/Compare";
 
 
@@ -45,6 +46,7 @@ export default (store) => {
       <Route path="about" component={About} />
       <Route path="accounts" component={BrowseAccount} />
       <Route path="accounts/:id" component={ShowAccount} />
+      <Route path="accounts/:accountId/repositories/:id" component={ShowRepository} />
       <Route path="compare" component={Compare} />
     </Route>
   );

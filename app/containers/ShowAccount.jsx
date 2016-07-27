@@ -51,7 +51,7 @@ class ShowAccount extends Component {
       <div className={cx('account')}>
         <AccountCard account={this.state.account}/>
         <CreateRepositoryForm onEntrySave={this.addNewRepo}/>
-        <RepositoryList repositories={this.state.repositories}/>
+        <RepositoryList account={this.state.account} repositories={this.state.repositories}/>
       </div>
     )
   }
