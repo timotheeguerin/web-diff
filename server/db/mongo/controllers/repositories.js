@@ -1,3 +1,4 @@
+
 import _ from 'lodash';
 import Account from '../models/account';
 import Repository from '../models/repository';
@@ -169,16 +170,15 @@ export function getAllComp(req, res) {
   });
 }
 
-function tryCloneRepo(url, folder, hash) {
-  if (fs.existsSync(folder)) {
-    require('simple-git')(folder)
-      .pull()
-      .checkout(hash)
-  } else {
-    require('simple-git')()
-      .clone(url, folder)
-      .checkout(hash)
-  }
+function tryCloneRepo(url,folder,hash){
+    if (fs.existsSync(folder)) {
+        return require('simple-git')(folder)
+            .checkout(hash)
+    }else{
+        return require('simple-git')()
+            .clone(url,folder)
+            .checkout(hash)
+    }
 }
 
 /**
@@ -201,27 +201,32 @@ export function startComp(req, res) {
     var hash2 = comparison.base.hash;
 
     var comparisonFolder = dir + '/' + acctId + "/" + repoId + "/comparisons";
+      var folder1 = comparisonFolder+'/'+hash1;
+      tryCloneRepo(repo.url,folder1,hash1).then(()=>{
+            exec("npm install",{cwd: folder1},function(err, stdout, stderr){
+                console.log()
+                console.log(err + stdout + stderr)
+            });
 
-    var folder1 = comparisonFolder + '/' + hash1;
-    tryCloneRepo(repo.url, folder1, hash1).then(()=> {
-      exec("npm install", {cwd: folder1}, function (err, stdout, stderr) {
-        console.log(err + stdout + stderr)
-      }).then(()=> {
-        exec("npm run dev 3001", {cwd: folder1}, function (err, stdout, stderr) {
-          console.log(err + stdout + stderr)
+            exec("npm run dev 3001",{cwd: folder1},function(err, stdout, stderr){
+                    console.log(err + stdout + stderr)
+            });
+
+            return res.status(200).send("Start successfully!");
         });
-      });
-    });
-    var folder2 = comparisonFolder + '/' + hash2;
-    tryCloneRepo(repo.url, folder2, hash2).then(()=> {
-      exec("npm install", {cwd: folder2}, function (err, stdout, stderr) {
-        console.log(err + stdout + stderr)
-      }).then(()=> {
-        exec("npm run dev 3002", {cwd: folder1}, function (err, stdout, stderr) {
-          console.log(err + stdout + stderr)
+
+      var folder2 =comparisonFolder+'/'+hash2;
+        tryCloneRepo(repo.url,folder2,hash2).then(()=>{
+            exec("npm install",{cwd: folder2},function(err, stdout, stderr){
+                console.log(err + stdout + stderr)
+            });
+
+            exec("npm run dev 3002",{cwd: folder1},function(err, stdout, stderr){
+                    console.log(err + stdout + stderr)
+            });
+
+            return res.status(200).send("Start successfully!");
         });
-      });
-    });
     return res.status(200).send("Start successfully!");
   });
 }
