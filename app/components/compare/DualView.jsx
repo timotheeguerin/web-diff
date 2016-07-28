@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from "react-dom";
 import PreviewBox from "./PreviewBox";
+import classNames from "classnames";
 
 // Native
 function getOffset(el) {
@@ -21,7 +22,7 @@ export default class DualView extends Component {
     super(props);
     this.state = {
       slider_position: '50%',
-      scrollTop: 0
+      scrollTop: 100
     };
 
     this.updateLeftIframeSize = this.updateLeftIframeSize.bind(this);
@@ -70,7 +71,7 @@ export default class DualView extends Component {
 
   handleMouseMove(positionX) {
     if (this.props.type == 'slide') {
-      if (this.dragging_slider) {
+      if (this.state.dragging_slider) {
         const container = ReactDOM.findDOMNode(this.refs.container);
         const left_offset = getOffset(container).left;
         console.log("Update or not?", positionX, left_offset);
@@ -83,11 +84,12 @@ export default class DualView extends Component {
   }
 
   sliderStartDragging() {
-    this.dragging_slider = true;
+    this.setState({dragging_slider: true})
   }
 
   sliderStopDragging() {
-    this.dragging_slider = false;
+    this.setState({dragging_slider: false})
+
   }
 
   iframeScrolling(scrollTop) {
@@ -105,18 +107,18 @@ export default class DualView extends Component {
     }
 
     return (
-      <div className={this.props.type + " dual-view"} onMouseMove={this.onMouseMove} onMouseUp={this.sliderStopDragging}
+      <div className={classNames("dual-view", "slide", {"dragging": this.state.dragging_slider})} onMouseMove={this.onMouseMove} onMouseUp={this.sliderStopDragging}
            onMouseLeave={this.sliderStopDragging} ref='container'>
         <div className='left-iframe revision-box' ref='left_iframe'
              style={{ 'width': this.state.slider_position}}>
-          <PreviewBox repository={this.props.repository} page={this.props.page} url="http://localhost:8000"
+          <PreviewBox repository={this.props.repository} page={this.props.page} url="/proxy/localhost/8000/"
                       revision={this.props.left_revision} onMouseMove={this.onMouseMoveInIframe}
                       onScroll={this.iframeScrolling} scrollTop={this.state.scrollTop}
                       width={this.state.containerWidth}/>
         </div>
         {slider}
         <div className='right-iframe revision-box' ref='right_iframe'>
-          <PreviewBox repository={this.props.repository} page={this.props.page} url="http://localhost:8001"
+          <PreviewBox repository={this.props.repository} page={this.props.page} url="/proxy/localhost/8001/"
                       revision={this.props.right_revision} onMouseMove={this.onMouseMoveInIframe}
                       onScroll={this.iframeScrolling} scrollTop={this.state.scrollTop}
                       width={this.state.containerWidth}/>

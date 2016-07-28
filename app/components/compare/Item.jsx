@@ -21,8 +21,6 @@ export default class SessionItem extends Component {
     this.state = {
       currentState: "stopped"
     }
-
-
   }
   componentDidMount() {
     setTimeout(() => {

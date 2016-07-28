@@ -38,13 +38,13 @@ export default class PreviewBox extends Component {
     const {onMouseMove} = this.props;
     iframe.contentDocument.onmousemove = (e) => {
       const mousePosition = e.pageX + getOffset(iframe).left;
-      console.log('Moving in iframe position is ', mousePosition, getOffset(iframe).left);
       onMouseMove(mousePosition)
     };
     const props = this.props;
-    // $(iframe.contents()).scroll(function () {
-    //   props.onScroll($(this).scrollTop())
-    // });
+    iframe.contentDocument.addEventListener('scroll', () => {
+      const doc = iframe.contentDocument;
+      props.onScroll((doc.documentElement && doc.documentElement.scrollTop) || doc.body.scrollTop)
+    });
   }
 
   componentWillReceiveProps(newProps) {
@@ -55,10 +55,10 @@ export default class PreviewBox extends Component {
   }
 
   updateIframeScroll(scrollTop) {
-    // if (!isNull(this.refs.iframe)) {
-    // var iframe = $(this.refs.iframe.getDOMNode());
-    // $(iframe.contents()).scrollTop(scrollTop);
-    // }
+    if (this.refs.iframe) {
+      const iframe = ReactDOM.findDOMNode(this.refs.iframe);
+      iframe.contentWindow.scrollTo(0, scrollTop);
+    }
   }
 
   onDragOver(e) {

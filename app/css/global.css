@@ -47,6 +47,10 @@
     top: 0;
     left: 0;
     float: left;
+    //pointer-events: none;
+  }
+
+  .dual-view.dragging iframe {
     pointer-events: none;
   }
 

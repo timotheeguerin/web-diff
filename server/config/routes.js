@@ -4,6 +4,8 @@
 import passport from 'passport';
 import unsupportedMessage from '../db/unsupportedMessage';
 import {controllers, passport as passportConfig} from '../db';
+import request from "request";
+import axios from 'axios';
 
 const usersController = controllers && controllers.users;
 const topicsController = controllers && controllers.topics;
@@ -67,11 +69,25 @@ export default (app) => {
   app.post('/api/accounts/:id/repositories', repositoryController.addRepo);
   app.delete('/api/accounts/:id/repositories/:repoId', repositoryController.removeRepo);
   app.get('/api/accounts/:acctId/repositories/:id/sync', repositoryController.syncRepo);
-    //Comparisons
-    app.get('/api/accounts/:acctId/repositories/:repoId/comparisons', repositoryController.getAllComp);
-    app.get('/api/accounts/:acctId/repositories/:repoId/comparisons/:id', repositoryController.getComp);
-    app.post('/api/accounts/:acctId/repositories/:repoId/comparisons', repositoryController.addComp);
-    app.post('/api/accounts/:acctId/repositories/:repoId/comparisons/:id/start', repositoryController.startComp);
-    app.post('/api/accounts/:acctId/repositories/:repoId/comparisons/:id/stop', repositoryController.stopComp);
+  //Comparisons
+  app.get('/api/accounts/:acctId/repositories/:repoId/comparisons', repositoryController.getAllComp);
+  app.get('/api/accounts/:acctId/repositories/:repoId/comparisons/:id', repositoryController.getComp);
+  app.post('/api/accounts/:acctId/repositories/:repoId/comparisons', repositoryController.addComp);
+  app.post('/api/accounts/:acctId/repositories/:repoId/comparisons/:id/start', repositoryController.startComp);
+  app.post('/api/accounts/:acctId/repositories/:repoId/comparisons/:id/stop', repositoryController.stopComp);
 
+  app.get('/proxy/:domain/:port/*', (req, res) => {
+    console.log(req.params);
+    const path = req.params['0'] ? `/${req.params['0']}` : '';
+    const url = `http://${req.params.domain}:${req.params.port}${path}`;
+
+    request(url).pipe(res);
+    // console.log(url);
+    //
+    // axios.get(url).then((content) => {
+    //   console.log(content);
+    //   // content = content.data + `<base href="http://localhost:8000" />`
+    //   res.send(content.data);
+    // });
+  })
 };
